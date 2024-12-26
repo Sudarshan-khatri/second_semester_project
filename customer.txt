@@ -1,0 +1,8 @@
+Information of customer
+Broker_name:subhawana kuwar
+user_name:subu
+password:sub$21
+Date of brith:23/01/2023
+E_mail address:khatri@gmail.com
+
+

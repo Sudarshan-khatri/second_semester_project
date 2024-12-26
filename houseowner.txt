@@ -1,0 +1,10 @@
+
+
+Information of home_owner
+Broker_name:sudiksha khatri
+user_name:sk
+password:svb@32
+Date of brith:23/03/2023
+E_mail address:kha@gmail.com
+
+
