@@ -6,3 +6,11 @@ Date of brith:23/01/2023
 E_mail address:khatri@gmail.com
 
 
+Information of customer
+Customer_name:su
+user_name:dsds
+password:skd@32
+Date of brith:11/09/2032
+E_mail address:khatri@gmail.com
+
+

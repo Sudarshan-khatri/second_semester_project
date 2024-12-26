@@ -1,5 +1,4 @@
 #include<iostream>
-#include<windows.h>
 #include<fstream>
 #include<regex> //for pattern matching
 #include<string>
@@ -47,66 +46,12 @@ class sign_up{
 			email_address=eml_add;
 		 }
 		void saveToFile() 
-		{
-		 	string earn;
-			cout<<"Pick: Home_owner or Customer!:";
-	        getline(cin,earn);
-	        //convet the earn to lowercase
-	        transform(earn.begin(), earn.end(), earn.begin(), ::tolower);
-	        if(earn=="home_owner")
-	        {
-		        fstream signup_file;
-			 	signup_file.open("houseowner.txt",ios::out|ios::app);
-			 	if(signup_file.is_open())
-			 	   {
-			 	   	signup_file<<"Information of "<<earn<<endl;
-			 	   	signup_file<<"House_owner_name:"<<full_name<<endl;
-			 	   	signup_file<<"user_name:"<<user_name<<endl;
-			 	   	signup_file<<"password:"<<password<<endl;
-			 	   	signup_file<<"Date of brith:"<<date<<endl;
-			 	   	signup_file<<"E_mail address:"<<email_address<<endl<<endl<<endl;
-			 	   	Sleep(20000);
-			 	   	system("cls");
-					signup_file.close();
-				    }
-				else
-				  {
-				  	cout<<"file not created !!";
-				  }	
-			}
-			else if(earn=="customer")
-			{
-			    fstream signup_file;
-			 	signup_file.open("customer.txt",ios::out|ios::app);
-			 	if(signup_file.is_open())
-			   {
-				 	signup_file<<"Information of "<<earn<<endl;
-				 	signup_file<<"Customer_name:"<<full_name<<endl;
-				 	signup_file<<"user_name:"<<user_name<<endl;
-				 	signup_file<<"password:"<<password<<endl;
-				 	signup_file<<"Date of brith:"<<date<<endl;
-				 	signup_file<<"E_mail address:"<<email_address<<endl<<endl<<endl;
-				 	Sleep(20000);
-			 	   	system("cls");
-					signup_file.close();
-			    }
-				else
-				  {
-				  	cout<<"file not created !!";
-				  }	
-			}
-			 
-		}
+		{ 
+		    
 };
-//class login:public sign_up{
-//	private:
-//	public:
-//		login():sign_up();
-//};
 int main()
 {
-	string fl_name,usr_name,pass_wrd,db,eml_address; 
-	cout<<"===========Fill_up the form====="<<endl;
+	string fl_name,usr_name,pass_wrd,db,eml_address;
 	cout<<"Full name:";
 	getline(cin,fl_name);
 	cout<<"User name:";
@@ -116,15 +61,15 @@ int main()
 	 		cout<<"Password:";
 	 	    getline(cin,pass_wrd);
 	 	    if(valid_password(pass_wrd))
-	 	         {
+	 	        {
 	 	         	break;
-				  }
-				else
-				 {
+				}
+			else
+				{
 				 	cout<<"password format not match!!\n";
-				 }
+			    }
 	 			
-		}
+			}
 	while(true)
 	    {
 	        cout<<"Enter dob(dd/mm/yyyy):";
@@ -137,7 +82,7 @@ int main()
 			 {
 			 	cout<<"Invalid dob format!!\n";
 			 }	
-	    }
+		 }
 	while(true)
 		{
 			cout<<"Email address:";
@@ -150,12 +95,11 @@ int main()
 			 {
 			 	cout<<"Invalid email address!!\n";
 			 }	
-	    }
+		}
 	sign_up obj_1(fl_name, usr_name, pass_wrd, db, eml_address);
 	obj_1.saveToFile();
     return 0;
 }
-
 
 
 

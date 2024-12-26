@@ -8,3 +8,11 @@ Date of brith:23/03/2023
 E_mail address:kha@gmail.com
 
 
+Information of home_owner
+Broker_name:princa
+user_name:hello
+password:shu@12
+Date of brith:23/01/2023
+E_mail address:pric@gmail.com
+
+
