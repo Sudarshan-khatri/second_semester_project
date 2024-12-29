@@ -1,18 +1,8 @@
-
-
 Information of home_owner
-Broker_name:sudiksha khatri
-user_name:sk
-password:svb@32
-Date of brith:23/03/2023
-E_mail address:kha@gmail.com
-
-
-Information of home_owner
-Broker_name:princa
-user_name:hello
-password:shu@12
-Date of brith:23/01/2023
-E_mail address:pric@gmail.com
+House_owner_name:suda
+user_name:sud
+password:sud@12
+Date of brith:23/02/2023
+E_mail address:khatri@gmail.com
 
 
