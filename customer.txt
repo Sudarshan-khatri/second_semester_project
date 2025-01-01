@@ -1,0 +1,8 @@
+Information of Customer
+Customer_name:suddd
+user_name:sud vai
+password:sus@12
+Date of brith:23/09/2023
+E_mail address:khsa@gmail.com
+Security key:rat
+

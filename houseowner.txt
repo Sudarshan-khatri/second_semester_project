@@ -1,8 +1,24 @@
-Information of home_owner
-House_owner_name:suda
+Information of Home_owner
+House_owner_name:sudarshan khatri
 user_name:sud
 password:sud@12
-Date of brith:23/02/2023
-E_mail address:khatri@gmail.com
+Date of brith:23/06/2014
+E_mail address:khatrisud@gmail.com
+Security_key:dog
 
+Information of Home_owner
+House_owner_name:Prajjwal Maharjan
+user_name:Pro boi
+password:pro@12
+Date of brith:26/07/2005
+E_mail address:prajjwal.maharjan2013@gmail.com
+Security_key:Safal
+
+Information of Home_owner
+House_owner_name:sudiksha
+user_name:suf
+password:suf@32
+Date of brith:23/03/2023
+E_mail address:khatri@gmail.com
+Security_key:sudarshan
 

@@ -29,6 +29,8 @@ class sign_up{
 		char password[100]; //user password 
 		string date; //date of birth of sign_up person 
 		string email_address;//email address of sign_up person 
+		string s_question;
+		int earn;
 	public:
 		sign_up()
 		 {
@@ -37,36 +39,36 @@ class sign_up{
 			strcpy(password,""); 
 			date="";
 			email_address="";
+			s_question="";
 		 }
-		sign_up(string f_name, const char* u_name, const char* pass, string dob, string eml_add)
+		sign_up(string f_name, const char* u_name, const char* pass, string dob, string eml_add ,string s_quest)
 		 {
 		    full_name=f_name;
 			strcpy(user_name, u_name);
             strcpy(password, pass);
 			date=dob;
 			email_address=eml_add;
+			s_question=s_quest;
 		 }
 		void saveToFile() 
 		{
-		 	string earn;
-			cout<<"\n\nPlease select:"<<endl;
-			cout<<"1:Home_owner"<<endl;
+			cout<<"\n\n1:Home_owner"<<endl;
 			cout<<"2:Customer"<<endl;
-	        getline(cin,earn);
-	        //convet the earn to lowercase
-	        transform(earn.begin(), earn.end(), earn.begin(), ::tolower);
-	        if(earn=="home_owner")
+	        cout<<"\nPlease select:";
+	        cin>>earn;
+	        if(earn==1)
 	        {
 		        fstream signup_file;
 			 	signup_file.open("houseowner.txt",ios::out|ios::app);
 			 	if(signup_file.is_open())
 			 	   {
-			 	   	signup_file<<"Information of "<<earn<<endl;
+			 	   	signup_file<<"Information of Home_owner"<<endl;
 			 	   	signup_file<<"House_owner_name:"<<full_name<<endl;
 			 	   	signup_file<<"user_name:"<<user_name<<endl;
 			 	   	signup_file<<"password:"<<password<<endl;
 			 	   	signup_file<<"Date of brith:"<<date<<endl;
-			 	   	signup_file<<"E_mail address:"<<email_address<<endl<<endl<<endl;
+			 	   	signup_file<<"E_mail address:"<<email_address<<endl;
+			 	   	signup_file<<"Security_key:"<<s_question<<endl<<endl;
 			 	   	system("cls");
 			 	   	cout<<"SIGNUP sucessflly!!!";
 			 	   	Sleep(2000);
@@ -78,18 +80,19 @@ class sign_up{
 				  	cout<<"file not created !!";
 				  }	
 			}
-			else if(earn=="customer")
+			else if(earn==2)
 			{
 			    fstream signup_file;
 			 	signup_file.open("customer.txt",ios::out|ios::app);
 			 	if(signup_file.is_open())
 			   {
-				 	signup_file<<"Information of "<<earn<<endl;
+				 	signup_file<<"Information of Customer"<<endl;
 				 	signup_file<<"Customer_name:"<<full_name<<endl;
 				 	signup_file<<"user_name:"<<user_name<<endl;
 				 	signup_file<<"password:"<<password<<endl;
 				 	signup_file<<"Date of brith:"<<date<<endl;
-				 	signup_file<<"E_mail address:"<<email_address<<endl<<endl<<endl;
+				 	signup_file<<"E_mail address:"<<email_address<<endl;
+				 	signup_file<<"Security key:"<<s_question<<endl<<endl;
 				 	system("cls");
 				 	cout<<"SIGNUP sucessflly!!!";
 				 	Sleep(2000);
@@ -111,12 +114,59 @@ class login:public sign_up{
 	public:
 		login(string u_name,string psd )
 		 {
-		 	m_user_name=u_name;
+		 	m_user_name=u_name; 
 		 	m_password=psd;
 		 }
 		void lg_in()
+		{
+		int opt;
+		cout<<"\n\n1:Home_owner"<<endl;
+		cout<<"2:Customer"<<endl;
+	    cout<<"\nPlease select:";
+	    cin>>opt;
+		if (opt==1)
 		 {
 		 	int flag=0;
+		 	ifstream l_file;
+		 	l_file.open("houseowner.txt",ios::in);
+		 	if(l_file.is_open())
+		 	 { 
+		 	 	string file_user,file_password,line;
+		 	    while(getline(l_file,line))
+		 	     {
+  	 	            if(line.find("user_name:")!=string::npos)
+  	 	             {
+  	 	             	file_user=line.substr(line.find(":")+1);
+						}
+					if(line.find("password:")!=string::npos)
+  	 	             {
+  	 	             	file_password=line.substr(line.find(":")+1);
+						}
+					if(file_user==m_user_name && file_password==m_password)
+					  {
+		 	         	flag=1;
+		 	         	break;
+					  }
+				  }
+				l_file.close();
+		     }
+			else
+			 {
+			 	cout<<"Sorry, the file could not be opened!";
+			 	return;
+			 }
+				if(flag==0)
+				 {
+				 	cout<<"\nInvalid user_name or password";
+				 }
+				else
+				 {
+				    cout<<"\nLogin sucessfully!!!!!!!!!!!";
+				 }
+			  }	
+		else if(opt==2)
+		{
+		 int flag=0;
 		 	ifstream l_file;
 		 	l_file.open("customer.txt",ios::in);
 		 	if(l_file.is_open())
@@ -153,7 +203,64 @@ class login:public sign_up{
 				 {
 				    cout<<"\nLogin sucessfully!!!!!!!!!!!";
 				 }
-			  }		  
+			}
+	}		  
+};
+class forget_dat:public sign_up{
+	private:
+		string sct_key;
+	public:
+		forget_dat(string fgt)
+		 {
+		 	sct_key=fgt;
+		 }
+		void recover()
+		{
+			string value;
+			cout<<"\n\n1:Home_owner"<<endl;
+			cout<<"2:Customer"<<endl;
+		    cout<<"\nPlease select:";
+		    cin>>earn;
+			if (earn==1)
+			   {
+				 	int flag=0;
+				 	ifstream s_file;
+				 	s_file.open("houseowner.txt",ios::in);
+				 	if(s_file.is_open())
+				 	{ 
+				 	 	string s_user,line;
+				 	    while(getline(s_file,line))
+				 	     {
+		  	 	            if(line.find("Security_key:")!=string::npos)
+		  	 	             {
+		  	 	             	s_user=line.substr(line.find(":")+1);
+							 } 
+							if(s_user==sct_key)
+							{	
+							   flag=1;
+							   value+=line+"/n";
+							}
+							else if(flag==0)
+							 {
+							 	value+=line+"/n";
+							 }
+			         	}
+			    	}
+			    	else
+					{
+			    		cout<<"file not opended ,sorry!!";
+					}
+			    if(flag==1)
+			     {
+			     	cout<<value;
+				 }
+				else
+				{
+					cout<<"sorry";
+				}
+				
+		    }
+        }
 };
 int main()
 {
@@ -167,8 +274,8 @@ int main()
 	cout<<"\n Please choose option:";
 	cin>>opt;
 	if(opt==1)
-	 {
-	 	string fl_name,db,eml_address; 
+	{
+	 	string fl_name,db,eml_address,recover_qn; 
 	 	char usr_name[100],pass_wrd[100];
 		cout<<"\n\nFill_up the form"<<endl;
 		cin.ignore();
@@ -187,8 +294,7 @@ int main()
 					else
 					 {
 					 	cout<<"password format not match!!\n";
-					 }
-		 			
+					 }		
 			}
 		while(true)
 		    {
@@ -216,27 +322,41 @@ int main()
 				 	cout<<"Invalid email address!!\n";
 				 }	
 		    }
-		 sign_up obj_1(fl_name, usr_name, pass_wrd, db, eml_address);
+		 cout<<"What is your pet's name?";
+		 getline(cin,recover_qn);
+		 sign_up obj_1(fl_name, usr_name, pass_wrd, db, eml_address,recover_qn);
 		 obj_1.saveToFile();
 		 main();
 	}
 	else if (opt==2)
-	 {
+	{
+		system("cls");
 	    cout<<"\n=======Login==============\n";
-		string name,password;
+		char usr_name[100],pass_wrd[100];
+		cin.ignore();
 		cout<<"Enter the user name:";
-		cin>>name;
+		cin.getline(usr_name,100);
 		cout<<"Enter the password:";
-		cin>>password;
-		login obj_2(name,password);
+		cin.getline(pass_wrd,100);
+		login obj_2(usr_name,pass_wrd);
 		obj_2.lg_in();
 		Sleep(2000);
 		system("cls");
 		main();
-	 }
-	
-    return 0;
-}
+	}
+	else if(opt==3)
+	{
+		system("cls");
+		cin.ignore();
+	    string s_ans;
+		cout<<"What is your pet's name?";
+		getline(cin,s_ans);
+		forget_dat obj3(s_ans);
+		obj3.recover();	
+	}
+ return 0;
+ }
+
 
 
 
