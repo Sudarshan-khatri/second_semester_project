@@ -97,6 +97,7 @@ class house_owner{
 			             << tollName << "\t" << contactNo << "\t" << roomType << "\t" << negotiable << "\t"
 			             << adPosted << "\t" << adExpired << "\t" << furnishing << "\t" << roomSize << endl;
 				 }
+			}
 		 }
 };
 int main()
@@ -154,4 +155,4 @@ int main()
 	obj1.display();
 	obj1.show();
 	return 0;
- }
+}
