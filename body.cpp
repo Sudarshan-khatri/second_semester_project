@@ -3,6 +3,8 @@
 #include<fstream>
 #include<sstream>
 #include<regex>
+#include<iomanip>
+#include<windows.h>
 using namespace std;
 bool isValidContactnumber(const string& contact)
  {
@@ -14,6 +16,12 @@ bool valid_date(const string& ad_Posted,const string& ad_Expired)
 	  	regex bd(R"(^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$)");
 	  	return regex_match(ad_Posted, bd) && regex_match(ad_Expired, bd);
 	  }
+void setColor(int color)
+    {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+    }
+    
 class house_owner{
 	protected:
 		int home_no;
@@ -54,7 +62,7 @@ class house_owner{
 			  }
 			else
 		     {
-				landlord<<"\n\nInformtation of Room"<<endl;
+//				landlord<<"\n\nInformtation of Room"<<endl;
 				landlord<<home_no<<endl;
 			    landlord<<floor_no<<endl;
 				landlord<<house_ow_name<<endl;
@@ -81,7 +89,21 @@ class house_owner{
 			  }
 			else
 			 {
-			 	cout<<"\n\nHouse_No\tFloor_No\t\tHouse_ow_Name\tLocation\tToll_Name\tContact_No\tRoom_Type\tNegotiable\tAd_Posted\tAd_Expired\tFurnishing\tSize_of_Room"<<endl;
+			 	setColor(4);
+			 	cout<<"----------------------------------------------------------------------------------------------------------------------------------------------------\n";
+			 	cout<<left<<setw(10)<<"House_No"
+				 <<setw(10)<<"Floor_No"
+				 <<setw(15)<<"House_ow_Name"
+				 <<setw(12)<<"Location"
+				 <<setw(10)<<"Toll_Name"
+				 <<setw(14)<<"Contact_No"
+				 <<setw(13)<<"Room_Type"
+				 <<setw(12)<<"Negotiable"
+				 <<setw(11)<<"Ad_Posted"
+				 <<setw(12)<<"Ad_Expired"
+				 <<setw(15)<<"Furnishing"
+				 <<setw(12)<<"Size_of_Room";
+				cout <<"\n----------------------------------------------------------------------------------------------------------------------------------------------------" << endl;
 			    string line;
 			    while (getline(show_detail, line))
 				 { // Read file line by line
@@ -93,16 +115,28 @@ class house_owner{
 			           >> roomType >> negotiable >> adPosted >> adExpired >> furnishing >> roomSize;
 			
 			        // Print the parsed data
-			        cout << houseNo << "\t" << floorNo << "\t" << houseOwner << "\t" << location << "\t"
-			             << tollName << "\t" << contactNo << "\t" << roomType << "\t" << negotiable << "\t"
-			             << adPosted << "\t" << adExpired << "\t" << furnishing << "\t" << roomSize << endl;
+			    cout <<left<<setw(10)<< houseNo
+				 <<setw(10)<<floorNo
+				 <<setw(15)<< houseOwner
+				 <<setw(12)<<location
+				 <<setw(10)<<tollName
+				 <<setw(14)<< contactNo
+				 <<setw(13)<< roomType 
+				 <<setw(12)<< negotiable
+				 <<setw(11)<< adPosted 
+				 <<setw(12)<<adExpired
+				 <<setw(15)<<furnishing
+				 <<setw(12)<< roomSize;
+//				 cout<<"\n";
 				 }
 		 }
+	}
 };
 int main()
 {
 	int hm_no,flr_no;
 	string house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size;
+	setColor(5);
 	cout<<"Enter home_no:";
 	cin>>hm_no;
 	cout<<"Enter floor no:";
@@ -152,6 +186,7 @@ int main()
 	getline(cin,rm_size);
 	house_owner obj1(hm_no,flr_no,house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size);
 	obj1.display();
+	system("cls");
 	obj1.show();
 	return 0;
  }
