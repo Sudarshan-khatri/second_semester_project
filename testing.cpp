@@ -3,11 +3,19 @@
 #include<fstream>
 #include<regex> //for pattern matching
 #include<string>
+#include <cstdlib> // For rand and srand
 #include<sstream>
 #include<algorithm>  //for transform
 #include<cctype>    //for lowercase
 #include<iomanip>
 using namespace std;
+    string generateUserID() 
+	{
+    srand(time(0)); 
+    int randomID = 1000 + rand() % 9000; // Random 4-digit number (1000 to 9999)
+    string userID = "USER" + to_string(randomID); // Prefix with "USER"
+    return userID;
+    }
 	bool valid_password(const string& pass_wrd)
 	  {
 	  	regex pass(R"(^[a-zA-Z0-9]{3}[^a-zA-Z0-9]{1}\d{2}$)");
@@ -24,15 +32,20 @@ using namespace std;
 	  	return regex_match(eml,email);
 	  }
 	bool isValidContactnumber(const string& contact)
- {
+   {
  	regex pattern(R"(^(\+977-)?(\d{10}|\d{3}-\d{3}-\d{4})$)");
  	return regex_match(contact,pattern);
- }
-bool valid_date(const string& ad_Posted,const string& ad_Expired)
+    }
+    bool valid_date(const string& ad_Posted,const string& ad_Expired)
 	  {
 	  	regex bd(R"(^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$)");
 	  	return regex_match(ad_Posted, bd) && regex_match(ad_Expired, bd);
 	  }
+bool valid_room_type(const string& room_type) {
+    regex room_regex(R"((single|[1-9]\BHK|[1-9]bhk))");
+    return regex_match(room_type,room_regex);
+}
+
 void setColor(int color)
     {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -68,9 +81,9 @@ class sign_up{
 		 }
 		void saveToFile() 
 		{
-			cout<<"\n\n1:Home_owner"<<endl;
-			cout<<"2:Customer"<<endl;
-	        cout<<"\nPlease select:";
+			cout<<"\n\n\t\t\t\t\t1:Home_owner"<<endl;
+			cout<<"\t\t\t\t\t2:Customer"<<endl;
+	        cout<<"\t\t\t\t\t\nPlease select:";
 	        cin>>earn;
 	        if(earn==1)
 	        {
@@ -78,22 +91,22 @@ class sign_up{
 			 	signup_file.open("houseowner.txt",ios::out|ios::app);
 			 	if(signup_file.is_open())
 			 	   {
-			 	   	signup_file<<"Information of Home_owner"<<endl;
-			 	   	signup_file<<"House_owner_name:"<<full_name<<endl;
-			 	   	signup_file<<"user_name:"<<user_name<<endl;
-			 	   	signup_file<<"password:"<<password<<endl;
-			 	   	signup_file<<"Date of brith:"<<date<<endl;
-			 	   	signup_file<<"E_mail address:"<<email_address<<endl;
-			 	   	signup_file<<"Security_key:"<<s_question<<endl<<endl;
+			 	   	signup_file<<"\t\t\t\t\tInformation of Home_owner"<<endl;
+			 	   	signup_file<<"\t\t\t\t\tHouse_owner_name:"<<full_name<<endl;
+			 	   	signup_file<<"\t\t\t\t\tuser_name:"<<user_name<<endl;
+			 	   	signup_file<<"\t\t\t\t\tpassword:"<<password<<endl;
+			 	   	signup_file<<"\t\t\t\t\tDate of brith:"<<date<<endl;
+			 	   	signup_file<<"\t\t\t\t\tE_mail address:"<<email_address<<endl;
+			 	   	signup_file<<"\t\t\t\t\tSecurity_key:"<<s_question<<endl<<endl;
 			 	   	system("cls");
-			 	   	cout<<"SIGNUP sucessflly!!!";
+			 	   	cout<<"\t\t\t\t\tSIGNUP sucessflly!!!";
 			 	   	Sleep(2000);
 			 	   	system("cls");
 					signup_file.close();
 				    }
 				else
 				  {
-				  	cout<<"file not created !!";
+				  	cout<<"\t\t\t\t\tfile not created !!";
 				  }	
 			}
 			else if(earn==2)
@@ -102,22 +115,22 @@ class sign_up{
 			 	signup_file.open("customer.txt",ios::out|ios::app);
 			 	if(signup_file.is_open())
 			   {
-				 	signup_file<<"Information of Customer"<<endl;
-				 	signup_file<<"Customer_name:"<<full_name<<endl;
-				 	signup_file<<"user_name:"<<user_name<<endl;
-				 	signup_file<<"password:"<<password<<endl;
-				 	signup_file<<"Date of brith:"<<date<<endl;
-				 	signup_file<<"E_mail address:"<<email_address<<endl;
-				 	signup_file<<"Security key:"<<s_question<<endl<<endl;
+				 	signup_file<<"\t\t\t\t\tInformation of Customer"<<endl;
+				 	signup_file<<"\t\t\t\t\tCustomer_name:"<<full_name<<endl;
+				 	signup_file<<"\t\t\t\t\tuser_name:"<<user_name<<endl;
+				 	signup_file<<"\t\t\t\t\tpassword:"<<password<<endl;
+				 	signup_file<<"\t\t\t\t\tDate of brith:"<<date<<endl;
+				 	signup_file<<"\t\t\t\t\tE_mail address:"<<email_address<<endl;
+				 	signup_file<<"\t\t\t\t\tSecurity key:"<<s_question<<endl<<endl;
 				 	system("cls");
-				 	cout<<"SIGNUP sucessflly!!!";
+				 	cout<<"\t\t\t\t\tSIGNUP sucessflly!!!";
 				 	Sleep(2000);
 			 	   	system("cls");
 					signup_file.close();
 			    }
 				else
 				  {
-				  	cout<<"file not created !!";
+				  	cout<<"\t\t\t\t\tfile not created !!";
 				  }	
 			}
 			 
@@ -133,12 +146,12 @@ class login:public sign_up{
 		 	m_user_name=u_name; 
 		 	m_password=psd;
 		 }
-		void lg_in()
+		string lg_in()
 		{
 		int opt;
-		cout<<"\n\n1:Home_owner"<<endl;
-		cout<<"2:Customer"<<endl;
-	    cout<<"\nPlease select:";
+		cout<<"\n\n\t\t\t\t\t1:Home_owner"<<endl;
+		cout<<"\t\t\t\t\t2:Customer"<<endl;
+	    cout<<"\n\t\t\t\t\tPlease select:";
 	    cin>>opt;
 		if (opt==1)
 		 {
@@ -173,16 +186,15 @@ class login:public sign_up{
 		     }
 			else
 			 {
-			 	cout<<"Sorry, the file could not be opened!";
-			 	return;
+			 	return "\t\t\t\t\tSorry, the file could not be opened!";
 			 }
 				if(flag==0)
 				 {
-				 	cout<<"\nInvalid user_name or password";
+				 	return "Invalid user_name or password";
 				 }
 				else
 				 {
-				    cout<<"\nLogin sucessfully!!!!!!!!!!!";
+				    return "Login sucessfully !!!!";
 				 }
 			  }	
 		else if(opt==2)
@@ -213,16 +225,15 @@ class login:public sign_up{
 		     }
 			else
 			 {
-			 	cout<<"Sorry, the file could not be opened!";
-			 	return;
+			 	return "\t\t\t\t\tSorry, the file could not be opened!";
 			 }
 				if(flag==0)
 				 {
-				 	cout<<"\nInvalid user_name or password";
+				    return "\t\t\t\t\tInvlaid user_name or password";
 				 }
 				else
 				 {
-				    cout<<"\nLogin sucessfully!!!!!!!!!!!";
+				    return "Login sucessfully !!!!";
 				 }
 			}
 	}		  
@@ -237,64 +248,54 @@ class forget_dat:public sign_up{
 		 }
 		void recover()
 		{
-			cout<<"\n\n1:Home_owner"<<endl;
-			cout<<"2:Customer"<<endl;
-		    cout<<"\nPlease select:";
-		    cin>>earn;
-			if (earn==1)
-			{
-			int flag=0;
-			ifstream s_file;
-			string file_user,file_password,s_key,line;
-		 	s_file.open("houseowner.txt",ios::in);
-		 	if(s_file.is_open())
-		 	 { 
-		 	    while(getline(s_file,line))
-		 	     {
-					if(line.find("user_name:")!=string::npos)
-  	 	             {
-  	 	             	file_user=line.substr(line.find(":")+1);
-  	 	             	file_user.erase(remove_if(file_user.begin(), file_user.end(), ::isspace), file_user.end()); 
-  	 	             	cout<<endl<<file_user<<endl;
+				cout<<"\n\n\t\t\t\t\t1:Home_owner"<<endl;
+				cout<<"\t\t\t\t\t2:Customer"<<endl;
+			    cout<<"\n\t\t\t\t\tPlease select:";
+			    cin>>earn;
+				if (earn==1)
+				{
+				int flag=0;
+				ifstream s_file;
+				string file_user,file_password,s_key,line;
+			 	s_file.open("houseowner.txt",ios::in);
+			 	if(s_file.is_open())
+			 	 { 
+			 	    while(getline(s_file,line))
+			 	     {
+			 	     	if(line.find("Security key:")!=string::npos)
+	  	 	             {
+	  	 	             	s_key=line.substr(line.find(":")+1);
+	  	 	             	if(line.find("user_name:")!=string::npos)
+			  	 	            {
+			  	 	             	file_user=line.substr(line.find(":")+1);
+			  	 	             	cout<<endl<<file_user<<endl;
+								}
+							if(line.find("password:")!=string::npos)
+			  	 	            {
+			  	 	             	file_password=line.substr(line.find(":")+1);
+			  	 	             	cout<<file_password<<endl;
+								}
+	  	 	             	if(s_key==sct_key)
+						    {
+						    	cout <<"\nUsername: " << file_user << endl;
+                                cout <<"Password: " << file_password << endl;
+                                flag = 1; 
+                                break;
+						    }
 						}
-					if(line.find("password:")!=string::npos)
-  	 	             {
-  	 	             	file_password=line.substr(line.find(":")+1);
-  	 	             	file_password.erase(remove_if(file_password.begin(),file_password.end(), ::isspace), file_password.end()); 
-  	 	             	cout<<file_password<<endl;
-						}
-					if(line.find("Security key:")!=string::npos)
-  	 	             {
-  	 	             	s_key=line.substr(line.find(":")+1);
-  	 	             	s_key.erase(remove_if(s_key.begin(),s_key.end(), ::isspace),s_key.end()); 
-  	 	             	cout<<s_key;
-					
-					 }
-					if(s_key==sct_key && !file_user.empty())
-					  {
-		 	         	flag=1;
-		 	         	break;
 					  }
-				  }
-				s_file.close();
-		     }
-			else
-			 {
-			 	cout<<"Sorry, the file could not be opened!";
-			 	return;
-			 }
-				if(flag==1)
-				 {
-				 	cout<<"User_name:"<<file_user<<endl;
-				    cout<<"User_password:"<<file_password<<endl;
-				 	
-				 }
-				else
-				 {
-				    cout<<"\nInvalid security key";
-				 }
+			     s_file.close();
+			    if (flag == 0)
+			    {
+                 cout <<"\t\t\t\t\tNo matching record found for the provided security key!" << endl;
+                }
+            }
+	         else 
+			{
+                cout <<"\t\t\t\t\tInvalid selection!" << endl;
+            }
 			}
-        }
+		}
 };
 class house_owner{
 	protected:
@@ -401,35 +402,65 @@ class house_owner{
 				 <<setw(12)<<adExpired
 				 <<setw(15)<<furnishing
 				 <<setw(12)<< roomSize;
-//				 cout<<"\n";
+			     cout<<"\n";
 				 }
 		 }
 	}
 };
+class book_room:public house_owner{
+	private:
+		string room_type;
+		string r_location;
+		int r_floor;	
+	public:
+//		book_room(string r_tp,string r_l,int r_f)
+//		 {
+//		 	room_type=r_tp;
+//		 	r_location=r_l;
+//		 	r_floor=r_f;
+//		 }
+//		void book()
+//		{
+//		 	fstream s_detail;
+//		 	s_detail.open("land.txt",ios::in ||ios::on);
+//		 	if(!show_detail.is_open())
+//		 	 {
+//		 	 	cout<<"sorry file not opended sucessfully";
+//			  }
+//			else
+//			{
+//			 string detais; 
+//	         while(getline(s_detail,details))
+//	          
+//		    }
+//		}	
+};
 int main()
 {
-	cout<<"==============WELCOME TO ==================="<<endl;
-	cout<<"==========HOME RENTAL SERVICE============"<<endl;
-	cout<<"1:SIGN_up"<<endl;
-	cout<<"2:LOGIN"<<endl;
-	cout<<"3:FORGET PASSWORD"<<endl;
-	cout<<"4:EXIT";
+    setColor(7);
+	cout<<"\n\n\t\t\t\t\t==============WELCOME TO ==================="<<endl;
+	cout<<"\t\t\t\t\t==========HOME RENTAL SERVICE============"<<endl;
+	cout<<"\t\t\t\t\t1:SIGN_up"<<endl;
+	cout<<"\t\t\t\t\t2:LOGIN"<<endl;
+	cout<<"\t\t\t\t\t3:FORGET PASSWORD"<<endl;
+	cout<<"\t\t\t\t\t4:EXIT";
 	int opt;
-	cout<<"\n Please choose option:";
+	setColor(3);
+	cout<<"\n\t\t\t\t\tPlease choose option:";
 	cin>>opt;
 	if(opt==1)
 	{
 	 	string fl_name,db,eml_address,recover_qn; 
 	 	char usr_name[100],pass_wrd[100];
-		cout<<"\n\nFill_up the form"<<endl;
+		cout<<"\n\n\t\t\t\t\tFill_up the form"<<endl;
 		cin.ignore();
-		cout<<"Full name:";
+		cout<<"\t\t\t\t\tFull name:";
 		getline(cin,fl_name);
-		cout<<"User name:";
+		cout<<"\t\t\t\t\tUser name:";
 		cin.getline(usr_name,100);
 		while(true)
 		 	{
-		 		cout<<"Password:";
+		 		cout<<"\t\t\t\t\tPassword:";
 		 	    cin.getline(pass_wrd,100);
 		 	    if(valid_password(pass_wrd))
 		 	         {
@@ -437,12 +468,12 @@ int main()
 					  }
 					else
 					 {
-					 	cout<<"password format not match!!\n";
+					 	cout<<"\t\t\t\t\tpassword format not match!!\n";
 					 }		
 			}
 		while(true)
 		    {
-		        cout<<"Enter dob(dd/mm/yyyy):";
+		        cout<<"\t\t\t\t\tEnter dob(dd/mm/yyyy):";
 				getline(cin,db);
 				if(valid_date(db))
 				 {
@@ -450,12 +481,12 @@ int main()
 				 }
 			    else
 				 {
-				 	cout<<"Invalid dob format!!\n";
+				 	cout<<"\t\t\t\t\tInvalid dob format!!\n";
 				 }	
 		    }
 		while(true)
 			{
-				cout<<"Email address:";
+				cout<<"\t\t\t\t\tEmail address:";
 		 	    getline(cin,eml_address);
 		 	    if(valid_email(eml_address))
 		 	     {
@@ -463,10 +494,10 @@ int main()
 				  }
 				else
 				 {
-				 	cout<<"Invalid email address!!\n";
+				 	cout<<"\t\t\t\t\tInvalid email address!!\n";
 				 }	
 		    }
-		 cout<<"What is your pet's name?";
+		 cout<<"\t\t\t\t\tWhat is your pet's name?";
 		 getline(cin,recover_qn);
 		 sign_up obj_1(fl_name, usr_name, pass_wrd, db, eml_address,recover_qn);
 		 obj_1.saveToFile();
@@ -474,90 +505,129 @@ int main()
 	}
 	else if (opt==2)
 	{
-		system("cls");
-	    cout<<"\n=======Login==============\n";
-		char usr_name[100],pass_wrd[100];
-		cin.ignore();
-		cout<<"Enter the user name:";
-		cin.getline(usr_name,100);
-		cout<<"Enter the password:";
-		cin.getline(pass_wrd,100);
-		login obj_2(usr_name,pass_wrd);
-		obj_2.lg_in();
-		int hm_no,flr_no;
-	string house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size;
-	setColor(5);
-	cout<<"Enter home_no:";
-	cin>>hm_no;
-	cout<<"Enter floor no:";
-	cin>>flr_no;
-	cout<<"Enter house_owner_name:";
-	cin>>house_ow_nm;
-	cout<<"Enter location:";
-	cin.ignore();
-	getline(cin,loc);
-	cout<<"Enter toll name:";
-	getline(cin,toll);
-	while(true)
-	 {
-	 	cout<<"Enter contact_number:";
-	 	getline(cin,contact);
-	 	if(isValidContactnumber(contact))
-	 	 {
-	 	 	break;
-		  }
-		else
-		 {
-		 	cout<<"Invalid number format\n";
-		 }
-	 }
-	cout<<"Enter room type:";
-	getline(cin,room_tp);
-	while(true)
-	 {
-	 	cout<<"Enter ad post date(dd/mm/yyyy):";
-	 	getline(cin,ad_pst);
-	 	cout<<"Enter ex post date(dd/mm/yyyy):";
-	 	getline(cin,ad_exp);
-	 	if( valid_date(ad_pst,ad_exp))
-	 	 {
-	 	 	break;
-		  }
-		else
-			{
-			  cout<<"Invalid format\n";	
-			}
-	 }
-	cout<<"Enter negotiable or not:";
-	getline(cin,neg);
-	cout<<"Enter status of furnishing:";
-	getline(cin,furn);
-	cout<<"Enter room size:";
-	getline(cin,rm_size);
-	house_owner obj1(hm_no,flr_no,house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size);
-	obj1.display();
 	system("cls");
-	obj1.show();
-		Sleep(2000);
-		system("cls");
-		main();
+	cout<<"\n\t\t\t\t\t=======Login==============\n";
+	char usr_name[100],pass_wrd[100];
+	string user_type;
+	cin.ignore();
+	cout<<"\t\t\t\t\tEnter the user name:";
+	cin.getline(usr_name,100);
+	cout<<"\t\t\t\t\tEnter the password:";
+	cin.getline(pass_wrd,100);
+	login obj_2(usr_name,pass_wrd);
+    string result=obj_2.lg_in();
+    cout<<result;
+    if(result=="Login sucessfully !!!!")
+    {
+	    int hm_no,flr_no;
+		string house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size;
+		setColor(5);
+		cout<<"\t\t\t\t\tEnter user type (customer/homeowner):";
+		cin.ignore();
+		getline(cin, user_type);
+		transform(user_type.begin(), user_type.end(), user_type.begin(), ::tolower);
+		if(user_type=="homeowner")
+		{
+			system("cls");
+			cout << "\n\n\t\t\t\t\t======================================================================" << endl;
+		    cout << "\t\t\t\t\t                       PROPERTY DETAILS ENTRY FORM                   " << endl;
+		    cout << "\t\t\t\t\t======================================================================" << endl;
+		    cout << " \t\t\t\t\t Welcome, House Owner!                                              " << endl;
+		    cout << " \t\t\t\t\t Please provide accurate details about your property to ensure      " << endl;
+		    cout << " \t\t\t\t\t your listing attracts the right customers.                         " << endl;
+		    cout << "\t\t\t\t\t======================================================================" << endl;
+			cout<<"\t\t\t\t\tEnter home_no:";
+			cin>>hm_no;
+			cout<<"\t\t\t\t\tEnter floor no:";
+			cin>>flr_no;
+			cout<<"\t\t\t\t\tEnter house_owner_name:";
+			cin>>house_ow_nm;
+			cout<<"\t\t\t\t\tEnter location:";
+			cin.ignore();
+			getline(cin,loc);
+			cout<<"\t\t\t\t\tEnter toll name:";
+			getline(cin,toll);
+			while(true)
+				{
+				 	cout<<"\t\t\t\t\tEnter contact_number:";
+				 	getline(cin,contact);
+				 	if(isValidContactnumber(contact))
+				 	 {
+				 	 	break;
+					  }
+					else
+					 {
+					 	cout<<"\t\t\t\t\tInvalid number format\n";
+					 }
+				}
+				while(true)
+				{
+				    cout<<"\t\t\t\t\tEnter room type:";
+				    getline(cin,room_tp);
+				    if (valid_room_type(room_tp))
+				     {
+				     	break;
+					 }
+					else
+					 {
+					 	cout<<"\t\t\t\t\tInvalid format";
+					 }	
+				}
+				while(true)
+				 {
+				 	cout<<"\t\t\t\t\tEnter ad post date(dd/mm/yyyy):";
+				 	getline(cin,ad_pst);
+				 	cout<<"\t\t\t\t\tEnter ex post date(dd/mm/yyyy):";
+				 	getline(cin,ad_exp);
+				 	if( valid_date(ad_pst,ad_exp))
+				 	 {
+				 	 	break;
+					  }
+					else
+						{
+						  cout<<"\t\t\t\t\tInvalid format\n";	
+						}
+				 }
+			cout<<"\t\t\t\t\tEnter negotiable or not:";
+			getline(cin,neg);
+			cout<<"\t\t\t\t\tEnter status of furnishing:";
+			getline(cin,furn);
+			cout<<"\t\t\t\t\tEnter room size:";
+			getline(cin,rm_size);
+			house_owner obj1(hm_no,flr_no,house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size);
+			obj1.display();
+			cout << "\n\t\t\t\t\t======================================================================" << endl;
+		    cout << " \t\t\t\t\t Thank you! Your property details have been successfully recorded.  " << endl;
+		    cout << "\t\t\t\t\t======================================================================" << endl;
+			main();
+		}
+		else if(user_type=="customer")
+		{
+			system("cls");
+			cout << "\n\n\t\t\t\t\t======================================================================" << endl;
+		    cout << "   \t\t\t\t\t                    WELCOME TO HOME RENTAL SERVICE                 " << endl;
+		    cout << "\t\t\t\t\t======================================================================" << endl;
+		    cout << " \t\t\t\t\t Your one-stop solution to finding the perfect rental property.      " << endl;
+		    cout << " \t\t\t\t\t Browse through the latest listings and connect directly with         " << endl;
+		    cout << "  \t\t\t\t\tproperty owners for hassle-free rentals.                            " << endl;
+		    cout << "\t\t\t\t\t======================================================================" << endl;
+			house_owner obj1(hm_no,flr_no,house_ow_nm,loc,toll,contact,room_tp,neg,ad_pst,ad_exp,furn,rm_size);
+			obj1.show();
+			main();	
+		}
 	}
+}
 	else if(opt==3)
 	{
+		setColor(1);
 		system("cls");
 		cin.ignore();
 	    string s_ans;
-		cout<<"What is your pet's name?:";
+		cout<<"\t\t\t\t\tWhat is your pet's name?:";
 		getline(cin,s_ans);
 		forget_dat obj3(s_ans);
 		obj3.recover();	
 		main();
 	}
- return 0;
- }
-
-
-
-
-
-
+  return 0;
+}
