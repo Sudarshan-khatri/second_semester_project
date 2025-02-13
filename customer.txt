@@ -1,0 +1,6 @@
+					Information of Customer
+					Customer_name:subhawana kuwar
+					user_name:sub
+					password:sub@12
+					Date of brith:23/05/2026
+					E_mail address:subhawana@gmail.com

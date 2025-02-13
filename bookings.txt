@@ -1,0 +1,6 @@
+Customer: sub
+House No: 334
+Floor No: 2
+Location: kalamati
+Rent: 45k
+------------------------

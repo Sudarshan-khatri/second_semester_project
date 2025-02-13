@@ -1,0 +1,6 @@
+					Information of Home_owner
+					House_owner_name:sudarshan khatri
+					user_name:sud
+					password:sud@12
+					Date of brith:23/05/2024
+					E_mail address:khatrisud@gmail.com
