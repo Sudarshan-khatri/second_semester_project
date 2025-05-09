@@ -1,6 +1,6 @@
 Customer: sub
-House No: 334
-Floor No: 2
-Location: kalamati
+House No: 455
+Floor No: 3
+Location: kqlopul
 Rent: 45k
 ------------------------

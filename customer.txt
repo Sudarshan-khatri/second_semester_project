@@ -1,6 +1,6 @@
 					Information of Customer
-					Customer_name:subhawana kuwar
+					Customer_name:subhawana kunwar
 					user_name:sub
-					password:sub@12
-					Date of brith:23/05/2026
-					E_mail address:subhawana@gmail.com
+					password:sub@22
+					Date of brith:23/04/2005
+					E_mail address:sub@gmail.com
